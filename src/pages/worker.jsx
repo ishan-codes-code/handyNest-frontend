@@ -227,7 +227,7 @@ const Worker = () => {
   // }, [selectedService, sortBy]);
 
   useEffect(() => {
-    document.title = "Workers | Fixora";
+    document.title = "Workers | Handynest";
   }, []);
 
   return (

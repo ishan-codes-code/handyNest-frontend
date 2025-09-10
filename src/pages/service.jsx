@@ -76,7 +76,7 @@ const ServiceDirectory = () => {
   }, [searchTerm, availSvc]);
 
   useEffect(() => {
-    document.title = "Services | Fixora";
+    document.title = "Services | Handynest";
   }, []);
 
   return (

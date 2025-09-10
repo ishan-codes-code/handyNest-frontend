@@ -33,7 +33,7 @@ const Navbar = () => {
             className={classNames("text-2xl font-bold", T.primaryColor)}
             whileHover={{ scale: 1.05 }}
           >
-            Fixora
+            Handynest
           </motion.h1>
 
           {/* Desktop Nav */}

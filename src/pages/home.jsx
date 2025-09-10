@@ -138,7 +138,8 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    document.title = "Fixora - Hire Trusted Technicians & Home Services Online";
+    document.title =
+      "Handynest - Hire Trusted Technicians & Home Services Online";
   }, []);
 
   return (

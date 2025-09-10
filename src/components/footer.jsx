@@ -14,7 +14,7 @@ const Footer = () => {
             <h4
               className={classNames("text-2xl font-bold mb-4", T.footerBrand)}
             >
-              Fixora
+              Handynest
             </h4>
             <p className="text-gray-300 text-sm">
               Connecting you with trusted professionals for all your service
