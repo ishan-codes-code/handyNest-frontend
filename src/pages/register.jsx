@@ -32,7 +32,7 @@ export default function Register() {
         description: response.data?.desc,
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       toast.error(err.response?.data?.message || "Please try again later.");
       throw err; // <--- rethrow so RHF knows it failed
     }

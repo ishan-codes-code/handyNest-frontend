@@ -33,7 +33,7 @@ export default function LoginPage() {
         response = await api.post("/auth/login", data);
       }
       setUser(response.data.user);
-      console.log(response.data.user);
+      // console.log(response.data.user);
       toast.success(response.data.message);
 
       setTimeout(

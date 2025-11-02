@@ -23,7 +23,7 @@ export default function ProfilePage() {
       navigate("/");
       toast.success("Logged out successfully.");
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       toast.error(
         err.response?.data?.message || "Logout failed. Please try again."
       );

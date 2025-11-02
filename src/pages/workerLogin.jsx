@@ -12,6 +12,7 @@ import ProfessionalInfo from "../components/proInfo.jsx";
 import PersonalInfo from "../components/personalInfo.jsx";
 
 import Credentials from "../components/credentials.jsx";
+import { toast } from "sonner";
 
 const stepFields = [
   // Step 0: Personal Info
@@ -39,7 +40,6 @@ const WorkerLogin = () => {
     setValue,
     trigger,
   } = methods;
-  // console.log(errors);
 
   const [steps, setSteps] = useState(0);
   const [isLastStep, setIsLastStep] = useState(false);
@@ -62,7 +62,11 @@ const WorkerLogin = () => {
       const svcs = response.data.services;
       setServices(response.data.services);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
+      toast.error(
+        err.response?.data?.message ||
+          "Could not fetch services. Please try again later."
+      );
     }
   };
   useEffect(() => {
@@ -72,9 +76,9 @@ const WorkerLogin = () => {
   const onSubmit = async (data) => {
     try {
       const res = await api.post("/workers/register", data);
-      console.log(res);
+      // console.log(res);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 

@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 const VerifyMail = () => {
   const { token } = useParams();
   const navigate = useNavigate();
-  console.log(token);
+
   if (!token) {
     toast.error("Invalid verification link.", {
       description: "Please try registering again.",
@@ -24,7 +24,7 @@ const VerifyMail = () => {
       });
       navigate("/login");
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       toast.error(err.response?.data?.message || "Verification failed.");
       navigate("/register");
     }
