@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Search, MapPin, Zap, CheckCircle, Star } from "lucide-react";
 import { useMyContext } from "../context";
-import { services, themes } from "../assets/exports";
+import { themes } from "../assets/exports.js";
 import classNames from "classnames";
 import PinSearchBar from "./handlePinCode";
 import { motion } from "framer-motion";

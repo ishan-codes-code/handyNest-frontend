@@ -20,16 +20,15 @@ import {
 } from "lucide-react";
 import classNames from "classnames";
 import { useMyContext } from "../context.jsx";
-import { themes } from "../assets/exports.jsx";
-import Navbar from "../components/navbar.jsx";
+import { themes } from "../assets/exports.js";
 import AnimateTxt from "../components/animateTxt.jsx";
-
 import PinSearchBar from "../components/handlePinCode";
-import Footer from "../components/footer.jsx";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-  // keep your original state shape; not changing content
-  const { themeKey, setThemeKey } = useMyContext();
+  const navigate = useNavigate();
+  const { themeKey, user } = useMyContext();
   const [activeTab, setActiveTab] = useState("hire");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
@@ -159,19 +158,6 @@ export default function Home() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            {/* <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-              Connect with{" "}
-              <span
-                className={classNames(
-                  "bg-gradient-to-r bg-clip-text text-transparent",
-                  T.primaryGradient
-                )}
-              >
-                Local Technicians
-              </span>{" "}
-              in Your Area
-            </h2> */}
-
             <AnimateTxt
               heroHeading={"Connect with Local Technicians in Your Area"}
               properties={{
@@ -192,14 +178,15 @@ export default function Home() {
 
             {/* Search Section */}
             <motion.div
+              id="searchCard"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
               className={classNames(
                 "mt-8 bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6",
                 "border",
                 T.softBorder100
               )}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
             >
               <h3 className="text-lg font-semibold text-gray-800 mb-4">
                 Find local technicians near you
@@ -208,7 +195,7 @@ export default function Home() {
 
               {/* Popular Searches */}
               <div className="mt-4">
-                <p className="text-sm text-gray-500 mb-2">Popular searches:</p>
+                <p className="text-sm text-gray-500 mb-2">Popular searvices:</p>
                 <div className="flex flex-wrap gap-2">
                   {[
                     "Plumber",
@@ -250,26 +237,28 @@ export default function Home() {
             {/* CTA Buttons */}
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <motion.button
+                onClick={() => navigate("/services")}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 className={classNames(
                   "px-8 py-4 text-white rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 font-semibold",
                   "bg-gradient-to-r",
                   T.primaryGradient,
                   T.primaryHoverGradient
                 )}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
               >
                 Need Help? Find Local Workers
                 <ArrowRight size={20} />
               </motion.button>
               <motion.button
+                onClick={() => navigate("/worker/login")}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 className={classNames(
                   "px-8 py-4 bg-white rounded-xl shadow-lg transition-all font-semibold border-2",
                   T.primaryColor,
                   T.softBorder200
                 )}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
               >
                 Are You a Technician? Start Earning
               </motion.button>
@@ -388,6 +377,7 @@ export default function Home() {
                 ))}
               </div>
               <button
+                onClick={() => navigate("/services")}
                 className={classNames(
                   "mt-6 px-6 py-3 text-white rounded-lg transition-colors",
                   T.primaryBg,
@@ -436,6 +426,7 @@ export default function Home() {
                 ))}
               </div>
               <button
+                onClick={() => navigate("/worker/login")}
                 className={classNames(
                   "mt-6 px-6 py-3 text-white rounded-lg transition-colors",
                   T.primaryBg,
@@ -664,6 +655,7 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.button
+                onClick={() => navigate("/services")}
                 className="px-8 py-4 bg-white rounded-xl shadow-lg transition-all font-semibold"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -673,6 +665,7 @@ export default function Home() {
                 </span>
               </motion.button>
               <motion.button
+                onClick={() => navigate("/worker/login")}
                 className={classNames(
                   "px-8 py-4 border-2 border-white text-white rounded-xl hover:bg-white transition-all font-semibold",
                   T.hoverColor

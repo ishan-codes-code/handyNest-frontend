@@ -1,15 +1,67 @@
-import { Home as HomeIcon, Menu, X } from "lucide-react";
+import { Home as HomeIcon, Menu, X, CircleUserRound } from "lucide-react";
 import { useState, useEffect } from "react";
 import classNames from "classnames";
 import { motion, AnimatePresence } from "framer-motion";
 import ThemeSelector from "./themeSelector.jsx";
 import { useMyContext } from "../context.jsx";
-import { themes } from "../assets/exports.jsx";
+import { themes } from "../assets/exports.js";
 import { NavLink, useLocation } from "react-router-dom";
+
+const AuthBtn = ({ T }) => {
+  return (
+    <>
+      <NavLink to="/login">
+        <div
+          className={classNames(
+            "inline-block transition-all duration-200 ease-in relative overflow-hidden z-10  px-4 py-2 cursor-pointer text-sm rounded-lg bg-white border  hover:text-white group active:scale-90",
+            T.borderColor,
+            T.primaryColor
+          )}
+        >
+          Login
+          <span
+            className={classNames(
+              "absolute left-1/2 top-full w-[140%] h-[180%] bg-black bg-opacity-5 rounded-full block transition-all duration-500 delay-100 ease-[cubic-bezier(0.55,0,0.1,1)] -z-10 transform -translate-x-1/2 scale-y-100 scale-x-125 group-hover:top-[-35%] group-hover:scale-y-[1.3] group-hover:scale-x-[0.8]",
+              `group-hover:${T.primaryBg}`
+            )}
+          ></span>
+          <span
+            className={classNames(
+              "absolute left-[55%] top-[180%] w-[160%] h-[190%] rounded-full block transition-all duration-500 delay-100 ease-[cubic-bezier(0.55,0,0.1,1)] -z-10 transform -translate-x-1/2 scale-y-100 scale-x-[1.45] group-hover:top-[-45%] group-hover:scale-y-[1.3] group-hover:scale-x-[0.8]",
+              T.primaryBg
+            )}
+          ></span>
+        </div>
+      </NavLink>
+      <NavLink to="/worker/login">
+        <div
+          className={classNames(
+            "inline-block transition-all duration-200 ease-in relative overflow-hidden z-10 text-white px-4 py-2 cursor-pointer text-sm rounded-lg  border hover:border-white hover:text-black group active:scale-90",
+            T.borderColor,
+            T.primaryBg
+          )}
+        >
+          Go online
+          <span
+            className={classNames(
+              "absolute left-1/2 top-full w-[140%] h-[180%] bg-black bg-opacity-5 rounded-full block transition-all duration-500 delay-100 ease-[cubic-bezier(0.55,0,0.1,1)] -z-10 transform -translate-x-1/2 scale-y-100 scale-x-125 group-hover:top-[-35%] group-hover:scale-y-[1.3] group-hover:scale-x-[0.8]",
+              `group-hover:bg-white`
+            )}
+          ></span>
+          <span
+            className={classNames(
+              "absolute left-[55%] top-[180%] w-[160%] h-[190%] rounded-full block transition-all duration-500 delay-100 ease-[cubic-bezier(0.55,0,0.1,1)] -z-10 transform -translate-x-1/2 scale-y-100 scale-x-[1.45] group-hover:top-[-45%] group-hover:scale-y-[1.3] group-hover:scale-x-[0.8] bg-white"
+            )}
+          ></span>
+        </div>
+      </NavLink>
+    </>
+  );
+};
 
 const Navbar = () => {
   const location = useLocation();
-  const { themeKey } = useMyContext();
+  const { themeKey, user } = useMyContext();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const T = themes[themeKey];
 
@@ -17,6 +69,7 @@ const Navbar = () => {
     if (isMobileMenuOpen) setIsMobileMenuOpen(false);
   }, [location]);
 
+  // if (location.pathname === "/worker/login") return null;
   return (
     <nav className="sticky top-0 z-50 backdrop-blur-md bg-white/30">
       <header>
@@ -81,36 +134,37 @@ const Navbar = () => {
           </nav>
 
           {/* Desktop Auth */}
-          <div className="hidden md:flex items-center gap-3">
+          {!user && (
+            <div className="hidden md:flex items-center gap-4 ">
+              <AuthBtn T={T} />
+            </div>
+          )}
+
+          <div className="flex items-center gap-2">
+            {user && (
+              <div
+                className={classNames(
+                  "p-1.5 rounded-md text-gray-600 active:scale-95 transition"
+                )}
+                title={user.name}
+              >
+                <NavLink to="/profile" className="flex items-center gap-2 ">
+                  <CircleUserRound />
+                  <span className="hidden sm:block md:hidden lg:block max-w-[120px] truncate">
+                    {user.name}
+                  </span>
+                </NavLink>
+              </div>
+            )}
+
+            {/* Mobile Menu Button */}
             <button
-              className={classNames(
-                "px-4 py-2 rounded-lg transition-colors",
-                T.primaryColor,
-                T.borderColor,
-                T.mutedHoverBg,
-                "border"
-              )}
+              className="md:hidden p-2"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              Login
-            </button>
-            <button
-              className={classNames(
-                "px-4 py-2 text-white rounded-lg transition-colors",
-                T.primaryBg,
-                T.primaryHover
-              )}
-            >
-              Sign Up
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </motion.div>
 
         {/* Mobile Menu */}
@@ -140,26 +194,11 @@ const Navbar = () => {
                   </NavLink>
                 ))}
                 <ThemeSelector />
-                <div className="flex gap-3 pt-3 border-t">
-                  <button
-                    className={classNames(
-                      "px-4 py-2 rounded-lg flex-1 border",
-                      T.primaryColor,
-                      T.borderColor
-                    )}
-                  >
-                    Login
-                  </button>
-                  <button
-                    className={classNames(
-                      "px-4 py-2 rounded-lg flex-1 text-white",
-                      T.primaryBg,
-                      T.primaryHover
-                    )}
-                  >
-                    Sign Up
-                  </button>
-                </div>
+                {!user && (
+                  <div className="flex items-center justify-center gap-2">
+                    <AuthBtn T={T} />
+                  </div>
+                )}
               </nav>
             </motion.div>
           )}
@@ -170,43 +209,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-// import { useState } from "react";
-// import { motion } from "framer-motion";
-
-// const pages = [
-//   { name: "Home", id: "home" },
-//   { name: "About", id: "about" },
-//   { name: "Services", id: "services" },
-//   { name: "Contact", id: "contact" },
-// ];
-
-// export default function Navbar() {
-//   const [active, setActive] = useState("home");
-
-//   return (
-//     <nav className="relative flex bg-gray-100 p-4 rounded-2xl shadow-md">
-//       <ul className="flex gap-6 relative w-full justify-center">
-//         {pages.map((page) => (
-//           <li key={page.id} className="relative">
-//             <button
-//               onClick={() => setActive(page.id)}
-//               className={`relative px-4 py-2 font-medium transition-colors z-10 ${
-//                 active === page.id ? "text-white" : "text-gray-600"
-//               }`}
-//             >
-//               {page.name}
-//             </button>
-//             {active === page.id && (
-//               <motion.div
-//                 layoutId="activeBackground"
-//                 className="absolute inset-0 bg-purple-600 rounded-xl"
-//                 transition={{ type: "spring", stiffness: 500, damping: 30 }}
-//               />
-//             )}
-//           </li>
-//         ))}
-//       </ul>
-//     </nav>
-//   );
-// }

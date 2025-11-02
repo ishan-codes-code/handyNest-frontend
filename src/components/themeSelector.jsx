@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ThemeSkeleton from "./themeSkeleton.jsx";
-import { themes } from "../assets/exports.jsx";
+import { themes } from "../assets/exports.js";
 import { X } from "lucide-react";
 import classNames from "classnames";
 import { useMyContext } from "../context";
@@ -23,7 +23,7 @@ const ThemeSelector = () => {
     <div
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
-      className="md:relative  m-auto"
+      className="md:relative  my-auto"
     >
       <button
         type="button"

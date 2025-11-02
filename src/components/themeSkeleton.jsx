@@ -1,5 +1,5 @@
 import { useMyContext } from "../context.jsx";
-import { themes } from "../assets/exports.jsx";
+import { themes } from "../assets/exports.js";
 import classNames from "classnames";
 
 const ThemeSkeleton = ({ T }) => {

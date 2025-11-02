@@ -1,4 +1,4 @@
-import { themes } from "../assets/exports";
+import { themes } from "../assets/exports.js";
 import { useMyContext } from "../context";
 import classNames from "classnames";
 import { motion } from "framer-motion";

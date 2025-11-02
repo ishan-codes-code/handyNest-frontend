@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { Search, Clock, SquarePen } from "lucide-react";
 import { useMyContext } from "../context";
-import { themes, services } from "../assets/exports";
+import { themes } from "../assets/exports.js";
 import { NavLink } from "react-router-dom";
 import { motion, AnimatePresence, scale } from "framer-motion";
 import PincodeCard from "../components/pinCodeCard";
@@ -147,8 +147,8 @@ const ServiceDirectory = () => {
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                     {filteredServices.map((service, index) => {
-                      const workersCount = availWorkers.filter((w) =>
-                        w.services.includes(service)
+                      const workersCount = availWorkers.filter(
+                        (w) => w.service._id === service._id
                       ).length;
 
                       return (

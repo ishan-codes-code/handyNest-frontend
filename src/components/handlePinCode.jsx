@@ -17,7 +17,7 @@ export default function PinSearchBar({ T, classes }) {
     handleSubmit,
     watch,
     setError,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
 
   const onSubmit = async (formData) => {
@@ -43,7 +43,11 @@ export default function PinSearchBar({ T, classes }) {
 
       const res = await api.get(`workers/getSW?pin=${cityPO.Pincode}`);
 
-      const services = res.data.workers.flatMap((worker) => worker.services);
+      const services = [
+        ...new Map(
+          res.data.workers.map((worker) => [worker.service._id, worker.service])
+        ).values(),
+      ];
 
       setAvailSvc(services);
       setAvailWorkers(res.data.workers);
@@ -89,10 +93,11 @@ export default function PinSearchBar({ T, classes }) {
               size={20}
             />
             <input
+              disabled={isSubmitting}
               type="numbers"
               placeholder="6 digits to find you"
               className={classNames(
-                "w-full  pl-10 pr-4 py-3 border border-gray-300 rounded-xl outline-none transition-all",
+                "w-full  pl-10 pr-4 py-3 border border-gray-300 rounded-xl outline-none transition-all disabled:opacity-60 disabled:cursor-not-allowed",
                 T.focusRing
               )}
               title="Enter your pincode"
@@ -136,9 +141,10 @@ export default function PinSearchBar({ T, classes }) {
           )}
         </div>
         <motion.button
+          disabled={isSubmitting}
           className={classNames(
             "px-6 py-3 text-white rounded-xl transition-all flex items-center justify-center gap-2 font-semibold shadow-lg",
-            "bg-gradient-to-r",
+            "bg-gradient-to-r disabled:opacity-60 disabled:cursor-not-allowed",
             T.primaryGradient,
             T.primaryHoverGradient
           )}

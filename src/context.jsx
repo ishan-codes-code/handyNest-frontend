@@ -1,9 +1,8 @@
 import { createContext, useContext, useState } from "react";
-import { themes } from "./assets/exports";
 
 const MyContext = createContext();
 
-export const ContextProvider = ({ children }) => {
+function ContextProvider({ children }) {
   const theme = localStorage.getItem("theme") || "slate";
   const [themeKey, setThemeKey] = useState(theme);
   const [pinDetails, setPinDetails] = useState(null);
@@ -11,6 +10,8 @@ export const ContextProvider = ({ children }) => {
   const [services, setServices] = useState([]);
   const [workers, setWorkers] = useState([]);
   const [availWorkers, setAvailWorkers] = useState([]);
+  const [user, setUser] = useState(null);
+  const [globalLoad, setGlobalLoad] = useState(false);
 
   return (
     <MyContext.Provider
@@ -23,11 +24,20 @@ export const ContextProvider = ({ children }) => {
         setAvailSvc,
         availWorkers,
         setAvailWorkers,
+        services,
+        setServices,
+        user,
+        setUser,
+        globalLoad,
+        setGlobalLoad,
       }}
     >
       {children}
     </MyContext.Provider>
   );
-};
+}
 
 export const useMyContext = () => useContext(MyContext);
+
+// 👇 Default export for provider
+export default ContextProvider;

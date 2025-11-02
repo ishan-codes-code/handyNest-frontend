@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import classNames from "classnames";
 import { useMyContext } from "../context.jsx";
-import { themes } from "../assets/exports.jsx";
+import { themes } from "../assets/exports.js";
 
 const container = {
   hidden: { opacity: 0 },

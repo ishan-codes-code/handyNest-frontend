@@ -10,19 +10,50 @@ import Navbar from "./components/navbar.jsx";
 import Footer from "./components/footer.jsx";
 import { AnimatePresence } from "framer-motion";
 import ScrollToTop from "./components/scrollToTop.jsx";
+import WorkerLogin from "./pages/workerLogin.jsx";
+import LoginPage from "./pages/login.jsx";
+import ProfilePage from "./pages/profile.jsx";
+import { autoLogin } from "./helper/autoLogin.jsx";
+import Register from "./pages/register.jsx";
+import VerifyMail from "./pages/verifyMail.jsx";
+import { Toaster } from "sonner";
 
 function App() {
-  const { pinDetails, setPinDetails, availSvc, services, workers } =
+  const { services, workers, setUser, globalLoad, setGlobalLoad } =
     useMyContext();
   const location = useLocation();
+
+  const [renderFrame, setRenderFrame] = useState(true);
 
   useEffect(() => {
     if (!services || !workers) return;
   });
 
+  useEffect(() => {
+    autoLogin(setUser, setGlobalLoad);
+  }, []);
+
+  const noHeaderFooter = ["/login", "/register", "/verifyMail"];
+  useEffect(() =>
+    setRenderFrame(!noHeaderFooter.some((p) => p === location.pathname), [
+      location.pathname,
+    ])
+  );
+
   return (
     <div>
-      <Navbar />
+      {globalLoad && (
+        <div className="h-screen w-screen fixed top-0 left-0 z-[70] flex items-center justify-center backdrop-blur-md bg-black/10">
+          <div className="bg-white/80 backdrop-blur-lg h-28 w-28 flex flex-col items-center justify-center border border-gray-200 rounded-2xl shadow-lg">
+            <div className="h-12 w-12 animate-spin rounded-full border-4 border-solid border-gray-200 border-t-gray-500"></div>
+            <p className="mt-3 text-sm text-gray-600 font-medium tracking-wide">
+              Loading...
+            </p>
+          </div>
+        </div>
+      )}
+      {renderFrame && <Navbar />}
+
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route
@@ -31,15 +62,6 @@ function App() {
               <>
                 <ScrollToTop />
                 <Home />
-              </>
-            }
-          />
-
-          <Route
-            path="/dashboard"
-            element={
-              <>
-                <h1 className="bold text-blue-600">I am dashboard</h1>
               </>
             }
           />
@@ -70,9 +92,34 @@ function App() {
               </>
             }
           />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/verifyMail/:token" element={<VerifyMail />} />
+          <Route
+            path="/worker/login"
+            element={
+              <>
+                <ScrollToTop />
+                <WorkerLogin />
+              </>
+            }
+          />
         </Routes>
       </AnimatePresence>
-      <Footer />
+      {renderFrame && <Footer />}
+      <Toaster
+        position="top-right"
+        richColors
+        toastOptions={{
+          className: "shadow-sm rounded-xl border border-gray-200",
+          style: {
+            background: "#FFFFFF", // your card background
+            color: "#1F2937", // primary text color
+            fontFamily: "Poppins, sans-serif",
+          },
+        }}
+      />
     </div>
   );
 }

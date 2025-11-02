@@ -12,7 +12,7 @@ import {
   BellRing,
 } from "lucide-react";
 import { useMyContext } from "../context";
-import { themes } from "../assets/exports";
+import { themes } from "../assets/exports.js";
 import classNames from "classnames";
 import { motion } from "framer-motion";
 import { scrollToTop } from "../components/scrollToTop";
