@@ -31,7 +31,7 @@ const stepFields = [
 ];
 const WorkerLogin = () => {
   const navigate = useNavigate();
-  const { themeKey, setServices, services } = useMyContext();
+  const { themeKey, setServices, services, setGlobalLoad } = useMyContext();
   const T = themes[themeKey];
 
   const methods = useForm({ shouldUnregister: false, mode: "onChange" });
@@ -59,6 +59,7 @@ const WorkerLogin = () => {
   );
 
   const getServices = async () => {
+    setGlobalLoad(true);
     try {
       const response = await api.get("/services/get");
       const svcs = response.data.services;
@@ -69,6 +70,8 @@ const WorkerLogin = () => {
         err.response?.data?.message ||
           "Could not fetch services. Please try again later or reload site."
       );
+    } finally {
+      setGlobalLoad(false);
     }
   };
   useEffect(() => {
@@ -76,6 +79,7 @@ const WorkerLogin = () => {
   }, []);
 
   const onSubmit = async (data) => {
+    setGlobalLoad(true);
     try {
       const res = await api.post("/workers/register", data);
       toast.success(res.data.message);
@@ -89,6 +93,8 @@ const WorkerLogin = () => {
         err.response?.data?.message || "Registration failed. Please try again."
       );
       // console.log(err);
+    } finally {
+      setGlobalLoad(false);
     }
   };
 
