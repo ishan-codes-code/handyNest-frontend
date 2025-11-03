@@ -6,7 +6,8 @@ import { Eye, Mail, Lock } from "lucide-react";
 import api from "../helper/apiService.jsx";
 
 import ErrorMessage from "./errorMessage.jsx";
-import { get, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
+import { toast } from "react-hot-toast";
 
 function Cooldown({ time, onCooldownComplete, isActive = false }) {
   const [timeLeft, setTimeLeft] = useState(time);
@@ -74,10 +75,13 @@ const Credentials = ({ T }) => {
     setMailLoader(true);
     try {
       const res = await api.get(`/auth/verifyMail?mail=${email}`);
-      console.log("Otp sent succesfull to", email);
       setMailOtpSent(true);
+      toast.success("Otp sent successfully to " + email);
     } catch (err) {
-      console.log(err);
+      toast.error(
+        err.response?.data?.message ||
+          "Could not send otp. Please try again later."
+      );
     } finally {
       setMailLoader(false);
       setCoolActive(true);
@@ -95,9 +99,11 @@ const Credentials = ({ T }) => {
       setValue("isMailVerified", true);
       setEditMail(false);
       trigger("email");
+      toast.success("Email verified successfully!");
     } catch (err) {
       console.log(err);
       emailRef.current = null;
+      toast.error(err.response?.data?.message || "Something went wrong");
     } finally {
       setMailLoader(false);
     }

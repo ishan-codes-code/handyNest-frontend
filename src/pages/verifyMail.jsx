@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import api from "../helper/apiService";
 import { motion } from "framer-motion";
 
@@ -19,9 +19,7 @@ const VerifyMail = () => {
   const verifyMail = async () => {
     try {
       const response = await api.get(`/auth/user/verifyMail?token=${token}`);
-      toast.success(response.data.message, {
-        description: response.data?.desc,
-      });
+      toast.success(response.data.message);
       navigate("/login");
     } catch (err) {
       // console.log(err);

@@ -23,7 +23,7 @@ import { useMyContext } from "../context.jsx";
 import { themes } from "../assets/exports.js";
 import AnimateTxt from "../components/animateTxt.jsx";
 import PinSearchBar from "../components/handlePinCode";
-import { toast } from "sonner";
+
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {

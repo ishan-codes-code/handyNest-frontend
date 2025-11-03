@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import ErrorMessage from "../components/errorMessage.jsx";
 import { NavLink, useNavigate } from "react-router-dom";
 import api from "../helper/apiService";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 
 export default function Register() {
@@ -28,9 +28,7 @@ export default function Register() {
     try {
       const response = await api.post("/auth/register", data);
       navigate("/login");
-      toast.success(response.data.message, {
-        description: response.data?.desc,
-      });
+      toast.success(response.data.message);
     } catch (err) {
       // console.log(err);
       toast.error(err.response?.data?.message || "Please try again later.");

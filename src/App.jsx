@@ -16,7 +16,8 @@ import ProfilePage from "./pages/profile.jsx";
 import { autoLogin } from "./helper/autoLogin.jsx";
 import Register from "./pages/register.jsx";
 import VerifyMail from "./pages/verifyMail.jsx";
-import { Toaster } from "sonner";
+
+import HotToast from "./components/toastSettings.jsx";
 
 function App() {
   const { services, workers, setUser, globalLoad, setGlobalLoad } =
@@ -108,18 +109,8 @@ function App() {
         </Routes>
       </AnimatePresence>
       {renderFrame && <Footer />}
-      <Toaster
-        position="top-right"
-        richColors
-        toastOptions={{
-          className: "shadow-sm rounded-xl border border-gray-200",
-          style: {
-            background: "#FFFFFF", // your card background
-            color: "#1F2937", // primary text color
-            fontFamily: "Poppins, sans-serif",
-          },
-        }}
-      />
+
+      <HotToast />
     </div>
   );
 }

@@ -12,7 +12,8 @@ import ProfessionalInfo from "../components/proInfo.jsx";
 import PersonalInfo from "../components/personalInfo.jsx";
 
 import Credentials from "../components/credentials.jsx";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const stepFields = [
   // Step 0: Personal Info
@@ -29,6 +30,7 @@ const stepFields = [
   ["workerBio"],
 ];
 const WorkerLogin = () => {
+  const navigate = useNavigate();
   const { themeKey, setServices, services } = useMyContext();
   const T = themes[themeKey];
 
@@ -65,7 +67,7 @@ const WorkerLogin = () => {
       // console.log(err);
       toast.error(
         err.response?.data?.message ||
-          "Could not fetch services. Please try again later."
+          "Could not fetch services. Please try again later or reload site."
       );
     }
   };
@@ -76,8 +78,16 @@ const WorkerLogin = () => {
   const onSubmit = async (data) => {
     try {
       const res = await api.post("/workers/register", data);
+      toast.success(res.data.message);
+      toast.success(
+        "You can now login to your worker account. Users will now be able to contact you."
+      );
+      navigate("/login");
       // console.log(res);
     } catch (err) {
+      toast.error(
+        err.response?.data?.message || "Registration failed. Please try again."
+      );
       // console.log(err);
     }
   };
