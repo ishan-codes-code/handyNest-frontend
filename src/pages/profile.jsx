@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { LogOut, Feather } from "lucide-react";
 import profileImg from "../assets/blankProfileImg.svg";
 import { useMyContext } from "../context";
@@ -11,18 +11,13 @@ import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 
 export default function ProfilePage() {
+  const isLoggingOut = useRef(false);
   const navigate = useNavigate();
   const { user, themeKey, setGlobalLoad, setUser } = useMyContext();
   const T = themes[themeKey];
 
-  useEffect(() => {
-    if (!user) {
-      toast.success(`Login to continue`);
-      navigate("/login");
-    }
-  }, [user]);
-
   const logout = async () => {
+    isLoggingOut.current = true;
     setGlobalLoad(true);
     try {
       const res = await api.post("/auth/logout");
@@ -36,9 +31,15 @@ export default function ProfilePage() {
       );
     } finally {
       setGlobalLoad(false);
+      setTimeout(() => (isLoggingOut.current = false), 500);
     }
   };
-
+  useEffect(() => {
+    if (!user && !isLoggingOut.current) {
+      toast.success("Login to continue");
+      navigate("/login");
+    }
+  }, [user]);
   return (
     <motion.div
       initial={{ x: "100vw" }}
