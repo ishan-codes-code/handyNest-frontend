@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect } from "react";
 import { LogOut, Feather } from "lucide-react";
 import profileImg from "../assets/blankProfileImg.svg";
 import { useMyContext } from "../context";
@@ -14,6 +14,13 @@ export default function ProfilePage() {
   const navigate = useNavigate();
   const { user, themeKey, setGlobalLoad, setUser } = useMyContext();
   const T = themes[themeKey];
+
+  useEffect(() => {
+    if (!user) {
+      toast.success(`Login to continue`);
+      navigate("/login");
+    }
+  }, [user]);
 
   const logout = async () => {
     setGlobalLoad(true);
