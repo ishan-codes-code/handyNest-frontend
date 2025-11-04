@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Eye, EyeOff, Mail, Lock, Github, Wrench } from "lucide-react";
 import classNames from "classnames";
 import { useMyContext } from "../context.jsx";
@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 import { useEffect } from "react";
 
 export default function LoginPage() {
+  const submitting = useRef(false);
   const navigate = useNavigate();
   const { themeKey, setUser, user } = useMyContext();
 
@@ -26,6 +27,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (data) => {
+    submitting.current = true;
     try {
       let response;
       if (data.roleWorker) {
@@ -49,11 +51,13 @@ export default function LoginPage() {
     } catch (err) {
       toast.error(err.response?.data?.message || "Please try again later.");
       throw err;
+    } finally {
+      setTimeout(() => (submitting.current = false), 500);
     }
   };
 
   useEffect(() => {
-    if (user) {
+    if (user && !submitting.current) {
       toast.success(`Already logged in as ${user.name}`);
       navigate("/profile");
     }
