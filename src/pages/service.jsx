@@ -85,7 +85,6 @@ const ServiceDirectory = () => {
       animate={{ x: 0 }}
       transition={{ duration: 0.3, ease: "anticipate" }}
       exit={{ x: "-100vw" }}
-      className={classNames("h-100%  bg-gradient-to-br", T.servicesBg)}
     >
       <AnimatePresence mode="wait">
         {pinDetails ? (
@@ -94,7 +93,7 @@ const ServiceDirectory = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0 }}
             transition={{ duration: 0.3, ease: "anticipate" }}
-            className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
+            className="max-w-6xl mx-auto px-4 sm:px-6  py-8"
           >
             <div className="mb-8 flex justify-between items-center gap-8">
               <h2 className="text-xl md:text-2xl font-bold mb-4 sm:mb-8">

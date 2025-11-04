@@ -16,8 +16,9 @@ import ProfilePage from "./pages/profile.jsx";
 import { autoLogin } from "./helper/autoLogin.jsx";
 import Register from "./pages/register.jsx";
 import VerifyMail from "./pages/verifyMail.jsx";
-
+import MainLayout from "./components/mainLayout.jsx";
 import HotToast from "./components/toastSettings.jsx";
+import Vector404Page from "./components/404.jsx";
 
 function App() {
   const { services, workers, setUser, globalLoad, setGlobalLoad } =
@@ -53,10 +54,8 @@ function App() {
           </div>
         </div>
       )}
-      {renderFrame && <Navbar />}
 
-      <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
+      {/* <Routes location={location} key={location.pathname}>
           <Route
             path="/"
             element={
@@ -106,9 +105,59 @@ function App() {
               </>
             }
           />
+          <Route path="*" element={<Vector404Page />} />
+        </Routes> */}
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          {/* ✅ All normal pages share the same layout */}
+          <Route element={<MainLayout />}>
+            <Route
+              path="/"
+              element={
+                <>
+                  <ScrollToTop />
+                  <Home />
+                </>
+              }
+            />
+            <Route
+              path="/services"
+              element={
+                <>
+                  <ScrollToTop />
+                  <Service />
+                </>
+              }
+            />
+            <Route
+              path="/services/:id"
+              element={
+                <>
+                  <ScrollToTop />
+                  <Worker />
+                </>
+              }
+            />
+            <Route
+              path="/workers"
+              element={
+                <>
+                  <ScrollToTop />
+                  <Worker />
+                </>
+              }
+            />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/worker/login" element={<WorkerLogin />} />
+          </Route>
+
+          {/* ❌ Pages without Navbar/Footer */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/verifyMail/:token" element={<VerifyMail />} />
+          <Route path="*" element={<Vector404Page />} />
         </Routes>
       </AnimatePresence>
-      {renderFrame && <Footer />}
 
       <HotToast />
     </div>

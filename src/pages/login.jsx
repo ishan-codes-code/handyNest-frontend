@@ -9,10 +9,11 @@ import { NavLink, useNavigate } from "react-router-dom";
 import api from "../helper/apiService";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { themeKey, setUser } = useMyContext();
+  const { themeKey, setUser, user } = useMyContext();
 
   const T = themes[themeKey];
 
@@ -51,6 +52,12 @@ export default function LoginPage() {
     }
   };
 
+  useEffect(() => {
+    if (user) {
+      toast.success(`Already logged in as ${user.name}`);
+      navigate("/profile");
+    }
+  }, []);
   return (
     <motion.div
       initial={{ x: "100vw" }}

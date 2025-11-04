@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Eye, EyeOff, Mail, Lock, Github, Wrench, User } from "lucide-react";
 import classNames from "classnames";
 import { useMyContext } from "../context.jsx";
@@ -11,7 +11,7 @@ import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 
 export default function Register() {
-  const { themeKey } = useMyContext();
+  const { themeKey, user } = useMyContext();
   const navigate = useNavigate();
 
   const T = themes[themeKey];
@@ -35,7 +35,12 @@ export default function Register() {
       throw err; // <--- rethrow so RHF knows it failed
     }
   };
-
+  useEffect(() => {
+    if (user) {
+      toast.success(`Already logged in as ${user.name}`);
+      navigate("/profile");
+    }
+  }, []);
   return (
     <motion.div
       initial={{ x: "100vw" }}

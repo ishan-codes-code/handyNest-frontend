@@ -40,7 +40,7 @@ const ThemeSelector = () => {
             exit={{ opacity: 0, x: -50 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="
-    fixed top-0 left-0 w-screen h-screen md:absolute md:top-auto md:left-[-750%] md:h-[80vh] md:w-[70vw] bg-white overflow-auto p-6 md:border md:mt-1 md:rounded-lg shadow-lg z-10"
+    fixed top-0 left-0 w-screen h-screen md:absolute md:top-auto md:left-[-750%] md:h-[80vh] md:w-[70vw] bg-white overflow-auto p-6 md:border md:mt-1 md:rounded-lg shadow-lg z-20"
           >
             <div className={classNames("w-full flex justify-between")}>
               <h2 className="text-2xl font-bold mb-4">Select a Theme</h2>

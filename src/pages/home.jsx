@@ -195,7 +195,7 @@ export default function Home() {
 
               {/* Popular Searches */}
               <div className="mt-4">
-                <p className="text-sm text-gray-500 mb-2">Popular searvices:</p>
+                <p className="text-sm text-gray-500 mb-2">Popular services:</p>
                 <div className="flex flex-wrap gap-2">
                   {[
                     "Plumber",
