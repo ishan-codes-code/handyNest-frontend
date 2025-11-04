@@ -40,7 +40,7 @@ export default function Register() {
       toast.success(`Already logged in as ${user.name}`);
       navigate("/profile");
     }
-  }, []);
+  }, [user]);
   return (
     <motion.div
       initial={{ x: "100vw" }}
